@@ -1,0 +1,7 @@
+*.kdev4
+*.o
+*.so
+cyclamen-cyprium-568-600.bc7
+decode
+dump.png
+encode

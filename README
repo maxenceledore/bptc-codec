@@ -1,0 +1,40 @@
+
+Usage :
+
+Execute command. Nothing else for the moment. Everything is hardcoded.
+
+Features:
+
+Mode handling			DONE
+Partition handling		partial
+Endpoints extraction		NEARLY DONE
+Endpoints P-bits extraction	TODO!
+Shared P-bits extraction	TODO!
+Swap color			DONE
+High color bits replication	TODO!
+Indices				TODO!
+Secondary Indices		TODO!
+BC6H decode			TODO!
+BC7 decode			partial
+BC6H encode			TODO!
+BC7 encode			started
+PSNR based encoding mode	TODO!
+Half float handling		TODO!
+PNG input			DONE
+TGA input			DONE
+EXR output			TODO!
+EXR input			TODO!
+PNG input			TODO!
+TGA input			TODO!
+Encoder PSNR evalution		started
+Known bugs
+
+
+References :
+
+http://www.opengl.org/registry/specs/ARB/texture_compression_bptc.txt
+http://msdn.microsoft.com/en-us/library/windows/desktop/hh308954(v=vs.85).aspx
+http://msdn.microsoft.com/en-us/library/windows/desktop/hh308953(v=vs.85).aspx
+http://msdn.microsoft.com/en-us/library/windows/desktop/hh308952(v=vs.85).aspx
+http://software.intel.com/en-us/vcsource/samples/fast-texture-compression
+http://www.reedbeta.com/blog/2012/02/12/understanding-bcn-texture-compression-formats
