@@ -48,7 +48,7 @@ bptc_encode_image(uint8_t *pixels, uint8_t components, uint8_t size,
 
     uint8_t *p = pixels;
 
-    p += i*(bw*bh*size);
+    p = ub4x4_block_array2d_adress(p, width, height, size, i);
 
     tile_analysis(p, &bd);
 
