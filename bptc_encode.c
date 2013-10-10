@@ -201,11 +201,11 @@ bptc_encode_endpoints(uint8_t *block, block_data bd) {
     block[6] |= (bd.endpG[1][1] & ColorMSBitsMask);
     block[6] |= (bd.endpG[2][0] & ColorMSBitsMask) >> 4;
     block[7] |= (bd.endpG[2][1] & ColorMSBitsMask);
-    block[8] |= (bd.endpB[0][0] & ColorMSBitsMask) >> 4;
+    block[7] |= (bd.endpB[0][0] & ColorMSBitsMask) >> 4;
     block[8] |= (bd.endpB[0][1] & ColorMSBitsMask);
-    block[9] |= (bd.endpB[1][0] & ColorMSBitsMask) >> 4;
+    block[8] |= (bd.endpB[1][0] & ColorMSBitsMask) >> 4;
     block[9] |= (bd.endpB[1][1] & ColorMSBitsMask);
-    block[10] |= (bd.endpB[2][0] & ColorMSBitsMask) >> 4;
+    block[9] |= (bd.endpB[2][0] & ColorMSBitsMask) >> 4;
     block[10] |= (bd.endpB[2][1] & ColorMSBitsMask);
     break;
     case 3:

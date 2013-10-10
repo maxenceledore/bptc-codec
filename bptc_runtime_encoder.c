@@ -70,6 +70,12 @@ int main(int argc, char **argv) {
      uint8_t *p = NULL;
      int i = 0;
      read_tga_file(input_fname, &width, &height, &components, &bpp, &pixel_data);
+     for(i=0; i < width*height; i++) {
+       uint8_t tmp = 0;
+       tmp = pixel_data[i*3+0];
+       pixel_data[i*3+0] = pixel_data[i*3+2];;
+       pixel_data[i*3+2] = tmp;
+  }
      /* There's no unsigned char RGB8 BPTC format. Only (S)RGBA. To simplify things,
       * let's inject now opaque alpha bits to work on RGBA8 from 24 bits RGB tga files.
       */
@@ -119,6 +125,8 @@ int main(int argc, char **argv) {
   if(out) {
     fwrite(bptc_data, 1, width*height, out);
     fclose(out);
+    free(pixel_data);
+    free(bptc_data);
   }
   else {
     printf("Error while creating output file : %s\n", output_fname);

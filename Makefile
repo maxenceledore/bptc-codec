@@ -18,5 +18,7 @@ all:
 
 clean:
 	rm -rf *.o
+	rm -rf *.bc7
+	rm -rf dump.png
 	rm $(DECODER_BIN)
 	rm $(ENCODER_BIN)
