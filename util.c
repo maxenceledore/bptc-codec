@@ -44,27 +44,17 @@
 uint8_t extract_bits(uint8_t *block, uint8_t startBit , uint8_t count) {
    
    int i = 0;
-   uint8_t inBytePos = startBit / 8, bitPos = startBit % 8,
-   remainingBits = 8 - bitPos;
+   uint8_t inBytePos = startBit / 8, bitPos = startBit % 8;
 
    uint32_t bitCountMask = 0;
    
    while(i < count) {
-      bitCountMask << 1;
+      bitCountMask <<= 1;
       bitCountMask |= 0x1;
       i++;
    };
-   
-   if(!remainingBits) {
-      inBytePos++;
-      return ((bitCountMask << 8-count) & block[inBytePos]) >> (8-count);
-   }
-   else if (remainingBits < count) {
-      uint8_t nextByteSubMak = 0;
-   }
-   else {
-      return ((bitCountMask << 8-bitPos) & block[inBytePos]) >> (8-count);
-   }         
+
+   return ((bitCountMask << 8-(bitPos+count)) & block[inBytePos]) >> (8-(bitPos+count)) ;
 }
 
 
