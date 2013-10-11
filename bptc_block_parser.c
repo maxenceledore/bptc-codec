@@ -59,14 +59,14 @@ bptc_parse_block(uint8_t *block, block_data *bd) {
 uint8_t
 get_block_mode(uint8_t byte0) {
 
-  int mode_number = 7, i;
+  int mode_number = 0, i;
   uint8_t mask = 0x80;
 
   for(i=0; i<8; i++) {
     if(byte0 & mask)
       return mode_number;
     byte0 <<= 1;
-    mode_number--;
+    mode_number++;
   }
 }
 
