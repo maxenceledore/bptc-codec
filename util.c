@@ -40,21 +40,49 @@
 #include "bptc_codec_data.h"
 #include "util.h"
 
+static uint8_t bitmask8 (uint8_t count) {
 
-uint8_t extract_bits(uint8_t *block, uint8_t startBit , uint8_t count) {
-   
    int i = 0;
-   uint8_t inBytePos = startBit / 8, bitPos = startBit % 8;
+   uint8_t bitCountMask = 0;
 
-   uint32_t bitCountMask = 0;
-   
    while(i < count) {
       bitCountMask <<= 1;
       bitCountMask |= 0x1;
       i++;
    };
 
-   return ((bitCountMask << 8-(bitPos+count)) & block[inBytePos]) >> (8-(bitPos+count)) ;
+  return bitCountMask;
+}
+
+uint8_t extract_bits(uint8_t *block, uint8_t startBit , uint8_t count) {
+   
+   uint8_t inBytePos = startBit / 8, bitPos = startBit % 8;
+   uint8_t bitCountMask = 0;
+
+   bitCountMask = bitmask8(count);
+
+   if(bitPos + count <= 8)
+     return ((bitCountMask << 8-(bitPos+count)) & block[inBytePos]) >> (8-(bitPos+count));
+   else {
+     uint8_t subMask1 = 0, subMask2 = 0;
+     uint8_t subMask1len = 0, subMask2len = 0;
+     uint8_t msb = 0, lsb = 0;
+
+     subMask1len = 8-bitPos;
+     subMask2len = count-subMask1len;
+
+     subMask1 = bitmask8 (subMask1len);
+     subMask2 = bitmask8 (subMask2len);
+     subMask2 <<= 8-(subMask2len);
+
+     msb = subMask1 & block[inBytePos];
+     lsb = subMask2 & block[inBytePos+1];
+
+     msb <<= subMask2len;
+     lsb >>= 8-subMask2len;
+
+     return msb | lsb;
+  }
 }
 
 
