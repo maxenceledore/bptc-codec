@@ -30,7 +30,7 @@ extern uint8_t
 extract_index_selection_bit(uint8_t *block, uint8_t mode);
 
 extern void
-extract_color_bits(uint8_t *block, block_data *bd);
+extract_endpoints_bits(uint8_t *block, block_data *bd);
 
 extern void
 extract_indices(uint8_t *block, uint8_t mode, const uint8_t *pTab,

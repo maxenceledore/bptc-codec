@@ -51,7 +51,7 @@ bptc_parse_block(uint8_t *block, block_data *bd) {
 
   bd->index_bits = query_bitfield_size(bd->mode, IDX_BITS_PER_ELT);
 
-  extract_color_bits(block, bd);
+  extract_endpoints_bits(block, bd);
   extract_indices(block, bd->mode, bd->partition_table, bd->index_table);
 }
 
@@ -190,13 +190,13 @@ extract_index_selection_bit(uint8_t *block, uint8_t mode) {
 /* http://www.reedbeta.com/blog/2012/02/12/understanding-bcn-texture-compression-formats/ */
 
 void
-extract_color_bits(uint8_t *block, block_data *bd) {
+extract_endpoints_bits(uint8_t *block, block_data *bd) {
 
   int i = 0;
   uint8_t endpoints[2*8];
   switch(bd->mode) {
     case 0:
-      bd->endpR[0][0] =(block[1] & 0x0f) << 4;
+      bd->endpR[0][0] = extract_bits(block, 12 , 4) << 4;
       bd->endpR[0][1] = block[2] & 0xf0;
       bd->endpR[1][0] =(block[2] & 0x0f) << 4;
       bd->endpR[1][1] = block[3] & 0xf0;
