@@ -9,6 +9,10 @@
 extern uint8_t
 extract_bits(uint8_t *block, uint8_t startBit , uint8_t count);
 
+extern void
+insert_bits(uint8_t *block, uint8_t startBit , uint8_t count,
+            uint8_t value);
+
 extern void*
 load_binary_file(const char *path);
 

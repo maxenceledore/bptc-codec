@@ -86,6 +86,32 @@ uint8_t extract_bits(uint8_t *block, uint8_t startBit , uint8_t count) {
 }
 
 
+void insert_bits(uint8_t *block, uint8_t startBit , uint8_t count,
+                 uint8_t value) {
+
+   uint8_t inBytePos = startBit / 8, bitPos = startBit % 8;
+   uint8_t bitCountMask = 0;
+
+   bitCountMask = bitmask8(count);
+/* value  &= bitCountMask; */
+   value <<= 8-(bitPos+count);
+
+   if(bitPos + count <= 8)
+     /* supposes we're working on zeroed bits on the insert area */
+     block[inBytePos] |= value;
+   else {
+     uint8_t subInsert1len = 0, subInsert2len = 0;
+
+     subInsert1len = 8-bitPos;
+     subInsert2len = count-subInsert1len;
+
+     block[inBytePos]   |= (uint8_t)(value << (8-count)) >> bitPos;
+     block[inBytePos+1] |= value << (8-((bitPos+count)%8));
+     return;
+   }
+}
+
+
 int8_t*
 ub_pixel_array2d_adress(int8_t *array2d, int width, int height,
                         int x, int y) {
