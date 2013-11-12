@@ -89,28 +89,28 @@ bptc_encode_mode(uint8_t *block, uint8_t mode) {
 
   switch(mode) {
     case 0:
-      block[0] = 1;
+      block[0] = 128;
       break;
     case 1:
-      block[0] = 2;
-      break;
-    case 2:
-      block[0] = 4;
-      break;
-    case 3:
-      block[0] = 8;
-      break;
-    case 4:
-      block[0] = 16;
-      break;
-    case 5:
-      block[0] = 32;
-      break;
-    case 6:
       block[0] = 64;
       break;
+    case 2:
+      block[0] = 32;
+      break;
+    case 3:
+      block[0] = 16;
+      break;
+    case 4:
+      block[0] = 8;
+      break;
+    case 5:
+      block[0] = 4;
+      break;
+    case 6:
+      block[0] = 2;
+      break;
     case 7:
-      block[0] = 128;
+      block[0] = 1;
       break;
     default:
       return 0;
