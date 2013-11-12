@@ -161,19 +161,19 @@ extract_partition_bits(uint8_t *block, uint8_t mode) {
     return 0;
 
   if(mode == 0)
-    return (uint8_t)(block[1] & 0xF0);
+    return (uint8_t)(block[0] & 0x78);
 
   if(mode == 1)
-    return (uint8_t)( ((block[0] & 0x01) << 5) | ((block[1] & 0xF8) >> 3));
+    return (uint8_t)(block[0] & 0x3F);
 
   if(mode == 2)
-    return (uint8_t)( ((block[0] & 0x03) << 4) | ((block[1] & 0xF0) >> 4));
+    return (uint8_t)( ((block[0] & 0x1F) << 1) | ((block[1] & 0x80) >> 7));
 
   if(mode == 3)
     return (uint8_t)( ((block[0] & 0x07) << 3) | ((block[1] & 0xE0) >> 5));
 
   if(mode == 7)
-    return (uint8_t)( (block[0] & 0x74) >> 1);
+    return (uint8_t)( (block[1] & 0xFC) >> 2);
 }
 
 
@@ -331,6 +331,23 @@ if(0) {                                                              \
     case 0:
     case 1:
     case 2:
+       idxTab[ 0] = extract_bits(block, 66, 4);
+       idxTab[ 1] = extract_bits(block, 70, 4);
+       idxTab[ 2] = extract_bits(block, 74, 4);
+       idxTab[ 3] = extract_bits(block, 78, 4);
+       idxTab[ 4] = extract_bits(block, 82, 4);
+       idxTab[ 5] = extract_bits(block, 86, 4);
+       idxTab[ 6] = extract_bits(block, 90, 4);
+       idxTab[ 7] = extract_bits(block, 94, 4);
+       idxTab[ 8] = extract_bits(block, 98, 4);
+       idxTab[ 9] = extract_bits(block,102, 4);
+       idxTab[10] = extract_bits(block,106, 4);
+       idxTab[11] = extract_bits(block,110, 4);
+       idxTab[12] = extract_bits(block,114, 4);
+       idxTab[13] = extract_bits(block,118, 4);
+       idxTab[14] = extract_bits(block,122, 4);
+       idxTab[15] = extract_bits(block,126, 4);
+       break;
     case 3:
        part1reached = 0, part2reached = 0;
        memset(idxTab, 0, 16);
@@ -361,22 +378,23 @@ if(0) {                                                              \
        idxTab[11] =   (block[10] & 0x03);
        break;
     case 6:
-       idxTab[ 0] =   ((block[ 8] & 0x70) >> 3) | ((block[ 8] & 0x08) >> 3);
-       idxTab[ 1] =   ((block[ 8] & 0x07) << 1) | ((block[ 9] & 0x80) >> 7);
-       idxTab[ 2] =   ((block[ 9] & 0x70) >> 3) | ((block[ 9] & 0x08) >> 3);
-       idxTab[ 3] =   ((block[ 9] & 0x07) << 1) | ((block[10] & 0x80) >> 7);
-       idxTab[ 4] =   ((block[10] & 0x70) >> 3) | ((block[10] & 0x08) >> 3);
-       idxTab[ 5] =   ((block[10] & 0x07) << 1) | ((block[11] & 0x80) >> 7);
-       idxTab[ 6] =   ((block[11] & 0x70) >> 3) | ((block[11] & 0x08) >> 3);
-       idxTab[ 7] =   ((block[11] & 0x07) << 1) | ((block[12] & 0x80) >> 7);
-       idxTab[ 8] =   ((block[12] & 0x70) >> 3) | ((block[12] & 0x08) >> 3);
-       idxTab[ 9] =   ((block[12] & 0x07) << 1) | ((block[13] & 0x80) >> 7);
-       idxTab[10] =   ((block[13] & 0x70) >> 3) | ((block[13] & 0x08) >> 3);
-       idxTab[11] =   ((block[13] & 0x07) << 1) | ((block[14] & 0x80) >> 7);
-       idxTab[12] =   ((block[14] & 0x70) >> 3) | ((block[14] & 0x08) >> 3);
-       idxTab[13] =   ((block[14] & 0x07) << 1) | ((block[15] & 0x80) >> 7);
-       idxTab[14] =   ((block[15] & 0x70) >> 3) | ((block[15] & 0x08) >> 3);
-       idxTab[15] =   ((block[15] & 0x07) << 1) | ((block[16] & 0x80) >> 7);
+       idxTab[ 0] = extract_bits(block, 66, 3); /* first bit is zero */
+       idxTab[ 1] = extract_bits(block, 69, 4);
+       idxTab[ 2] = extract_bits(block, 73, 4);
+       idxTab[ 3] = extract_bits(block, 77, 4);
+       idxTab[ 4] = extract_bits(block, 81, 4);
+       idxTab[ 5] = extract_bits(block, 85, 4);
+       idxTab[ 6] = extract_bits(block, 89, 4);
+       idxTab[ 7] = extract_bits(block, 93, 4);
+       idxTab[ 8] = extract_bits(block, 97, 4);
+       idxTab[ 9] = extract_bits(block,101, 4);
+       idxTab[10] = extract_bits(block,105, 4);
+       idxTab[11] = extract_bits(block,109, 4);
+       idxTab[12] = extract_bits(block,113, 4);
+       idxTab[13] = extract_bits(block,117, 4);
+       idxTab[14] = extract_bits(block,121, 4);
+       idxTab[15] = extract_bits(block,125, 4);
+       break;
     case 7:
        /* if(pTab[0] == 1) */ /* every upper left pixel is in partition 0 */
        idxTab[ 0] =    (block[ 8] & 0x20) >> 5;

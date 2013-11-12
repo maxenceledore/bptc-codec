@@ -71,7 +71,10 @@ bptc_decode_image(uint8_t *block_stream, int width, int height,
 void
 bptc_decode_block(uint8_t *rgba8_image, int width, int height,
                   block_data bd, int block_nr) {
-
+#if 0
+  if(bd.mode != 6)
+    return;
+#endif
   uint8_t rgba8_tile_4x4[BPTC_BLOCK_X*BPTC_BLOCK_Y*4];
 
   interpolate_color(rgba8_tile_4x4, bd);
