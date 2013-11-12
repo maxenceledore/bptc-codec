@@ -188,7 +188,7 @@ bptc_encode_endpoints(uint8_t *block, block_data bd) {
   uint8_t colorBits = bd.color_bits;
   uint8_t ColorMSBitsMask = 255 << (8 - colorBits);
 
-  switch(bd.mode) {
+  switch(1) {
     case 0:
     insert_bits(block, 6, colorBits, (bd.endpR[0][0] >> 8-colorBits));
     insert_bits(block,10, colorBits, (bd.endpR[0][1] >> 8-colorBits));
@@ -209,6 +209,20 @@ bptc_encode_endpoints(uint8_t *block, block_data bd) {
     insert_bits(block,70, colorBits, (bd.endpB[2][0] >> 8-colorBits));
     insert_bits(block,74, colorBits, (bd.endpB[2][1] >> 8-colorBits));
     break;
+    case 1:
+    insert_bits(block, 9, colorBits, (bd.endpR[0][0] >> 8-colorBits));
+    insert_bits(block,15, colorBits, (bd.endpR[0][1] >> 8-colorBits));
+    insert_bits(block,21, colorBits, (bd.endpR[1][0] >> 8-colorBits));
+    insert_bits(block,27, colorBits, (bd.endpR[1][1] >> 8-colorBits));
+    insert_bits(block,33, colorBits, (bd.endpG[0][0] >> 8-colorBits));
+    insert_bits(block,39, colorBits, (bd.endpG[0][1] >> 8-colorBits));
+    insert_bits(block,45, colorBits, (bd.endpG[1][0] >> 8-colorBits));
+    insert_bits(block,51, colorBits, (bd.endpG[1][1] >> 8-colorBits));
+    insert_bits(block,57, colorBits, (bd.endpB[0][0] >> 8-colorBits));
+    insert_bits(block,63, colorBits, (bd.endpB[0][1] >> 8-colorBits));
+    insert_bits(block,69, colorBits, (bd.endpB[1][0] >> 8-colorBits));
+    insert_bits(block,75, colorBits, (bd.endpB[1][1] >> 8-colorBits));
+    break;
     case 3:
     break;
     case 6:
@@ -216,7 +230,6 @@ bptc_encode_endpoints(uint8_t *block, block_data bd) {
     block[1] |= (bd.endpR[0][0] & ColorMSBitsMask) << 6;
     block[1] |= (bd.endpR[0][1] & ColorMSBitsMask) >> 1;
     break;
-    case 1:
     case 2:
     case 4:
     case 5:
